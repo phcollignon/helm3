@@ -1,0 +1,19 @@
+backend:
+  secret:
+    mongodb_uri:
+      username: admin
+      password: password
+  ingress:
+    enabled: false
+frontend:
+  ingress:
+    enabled: true
+
+ingress:
+  hosts:
+    - host:
+        domain: frontend.minikube.local
+        chart: frontend
+    - host:
+        domain: backend.minikube.local
+        chart: backend

@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.volume.storage }} 
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path:  /mnt/data/{{ .Release.Name }}

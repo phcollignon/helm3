@@ -1,0 +1,22 @@
+apiVersion: v2
+name: guestbook
+appVersion: "2.0"
+description: A Helm chart for Guestbook 2.0 
+version: 1.2.2
+type: application
+dependencies:
+  - name: backend
+    version: ~1.2.2
+    repository: http://localhost:8080
+    condition: backend.enabled
+    tags:
+      - api
+  - name: frontend
+    version: ^1.2.0
+    repository: http://localhost:8080
+  - name: database
+    version: ~1.2.2
+    repository: http://localhost:8080
+    condition: database.enabled
+    tags:
+      - api

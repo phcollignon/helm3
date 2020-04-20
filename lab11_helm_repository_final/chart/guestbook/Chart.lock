@@ -1,0 +1,12 @@
+dependencies:
+- name: backend
+  repository: http://localhost:8080
+  version: 1.2.2
+- name: frontend
+  repository: http://localhost:8080
+  version: 1.2.2
+- name: mongodb
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 7.8.6
+digest: sha256:a7f90b589c79fcd5aea9166469a6b0a61a2832de42e8e8235b11c0d28f9a5296
+generated: "2020-02-27T12:13:40.47324698+01:00"

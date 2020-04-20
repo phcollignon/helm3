@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-{{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-{{ .Chart.Name }}
+    spec:
+      containers:
+        - image: mongo
+          env:
+          - name: MONGO_INITDB_DATABASE
+            value: guestbook
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-{{ .Chart.Name }}-secret
+                key: mongodb-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-{{ .Chart.Name }}-secret
+                key: mongodb-password
+          name: {{ .Release.Name }}-{{ .Chart.Name }}
+          ports:
+            - name: mongodb
+              containerPort: 27017
+          volumeMounts:
+            - name: {{ .Release.Name }}-{{ .Chart.Name }}-volume
+              mountPath: /data/db
+      volumes:
+        - name: {{ .Release.Name }}-{{ .Chart.Name }}-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Chart.Name }}-pvc

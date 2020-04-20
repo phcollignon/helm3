@@ -1,0 +1,55 @@
+<p></p>
+<mat-card class="mat-elevation-z8">
+  
+  <mat-card-content>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <!-- Message Column -->
+        <ng-container matColumnDef="message">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Message </th>
+          <td mat-cell *matCellDef="let row"> {{row.message}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
+<p></p>
+
+<mat-card class="mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>Leave your feeback !</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form #myform="ngForm" (ngSubmit)="myform.valid && onSubmit(myform)" novalidate>
+    <div class="newentry-container">
+      <mat-form-field>
+        <input required name="name" [(ngModel)]="name" ngModel matInput placeholder="Your name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput name="message"[(ngModel)]="message" ngModel placeholder="Your guestbook message"></textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary">Leave message</button>
+
+    </div>
+  </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "frontend.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }} 
+  selector:
+    matchLabels:
+      app: {{ include "frontend.fullname" . }} 
+  template:
+    metadata: 
+      labels:
+        app: {{ include "frontend.fullname" . }}
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        name: {{ include "frontend.fullname" . }}
+        ports:
+        - name: http
+          containerPort: 4200
+        env:
+        - name: BACKEND_URI
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "frontend.fullname" . }}-config
+              key: backend-uri
+        - name: GUESTBOOK_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "frontend.fullname" . }}-config
+              key: guestbook-name
+
+
+              
+

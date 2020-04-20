@@ -1,0 +1,19 @@
+secret:
+  mongodb_uri:
+    username: your_db_username
+    password: your_db_password
+    dbchart: database
+    dbport: 27017
+    dbconn: "guestbook?authSource=admin"
+#  mongodb_uri: "mongodb://admin:password@mongodb:27017/guestbook?authSource=admin"
+#  mongodb_uri: "bW9uZ29kYjovL2FkbWluOnBhc3N3b3JkQG1vbmdvZGI6MjcwMTcvZ3Vlc3Rib29rP2F1dGhTb3VyY2U9YWRtaW4="
+image:
+  repository: phico/backend
+  tag: "2.0"
+replicaCount: 1
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: true
+  host: backend.minikube.local

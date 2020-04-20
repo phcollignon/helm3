@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "backend.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "backend.fullname" . }} 
+  template:
+    metadata:
+      labels:
+        app: {{ include "backend.fullname" . }}
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        name: {{ include "backend.fullname" . }}
+        ports:
+        - name: http
+          containerPort: 3000
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "backend.fullname" . }}-secret
+              key: mongodb-uri

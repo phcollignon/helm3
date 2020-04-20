@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-config
+data:
+  guestbook-name: {{ .Values.config.guestbook_name }}
+  backend-uri: {{ .Values.config.backend_uri }}

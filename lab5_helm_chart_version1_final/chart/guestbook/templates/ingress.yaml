@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: guestbook-ingress
+spec:
+  rules:
+  - host: frontend.minikube.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+  - host: backend.minikube.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: backend
+          servicePort: 80

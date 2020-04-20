@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - image: mongo
+          env:
+          - name: MONGO_INITDB_DATABASE
+            value: guestbook
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongodb-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongodb-password
+          name: mongodb
+          ports:
+            - name: mongodb
+              containerPort: 27017
+          volumeMounts:
+            - name: mongodb-volume
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-volume
+          persistentVolumeClaim:
+            claimName: mongodb-pvc

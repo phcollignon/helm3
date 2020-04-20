@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "database.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "database.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "database.fullname" . }}
+    spec:
+      containers:
+        - image: mongo
+          env:
+          - name: MONGO_INITDB_DATABASE
+            value: guestbook
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "database.fullname" . }}-secret
+                key: mongodb-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "database.fullname" . }}-secret
+                key: mongodb-password
+          name: {{ include "database.fullname" . }}
+          ports:
+            - name: mongodb
+              containerPort: 27017
+          volumeMounts:
+            - name: {{ include "database.fullname" . }}-volume
+              mountPath: /data/db
+      volumes:
+        - name: {{ include "database.fullname" . }}-volume
+          persistentVolumeClaim:
+            claimName: {{ include "database.fullname" . }}-pvc

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend 
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: phico/backend:2.0
+        imagePullPolicy: Always
+        name: backend
+        ports:
+        - name: backend
+          containerPort: 3000
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: mongodb-uri
