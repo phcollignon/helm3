@@ -8,7 +8,7 @@ backend:
     enabled: false
 frontend:
   ingress:
-    enabled: true
+    enabled: false
 database:
   enabled: true
 tags:
