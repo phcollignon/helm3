@@ -7,7 +7,7 @@ backend:
     enabled: false
 frontend:
   ingress:
-    enabled: true
+    enabled: false
 
 ingress:
   hosts:
