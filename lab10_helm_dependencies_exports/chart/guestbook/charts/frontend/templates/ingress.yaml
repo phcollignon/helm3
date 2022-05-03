@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled }}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "frontend.fullname" . }}-ingress
@@ -9,7 +9,10 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: {{ include "frontend.fullname" . }}
-          servicePort: 80
+          service:
+            name:{{ include "frontend.fullname" . }}
+            port: 
+              number: 80
 {{- end }}

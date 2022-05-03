@@ -13,7 +13,7 @@ sudo mv linux-amd64/helm /usr/local/bin/helm
 helm version --short
 kubectl config view
 
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add "stable" "https://charts.helm.sh/stable"
 
 ```
 ## Helm MySql installation demo
