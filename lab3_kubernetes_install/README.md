@@ -23,11 +23,12 @@ sudo vi /etc/hosts
 ```
 
 ## Kubectl installation
+```
 curl -o kubectl https://storage.googleapis.com/kubernetes-release/release/v1.20.2/bin/linux/amd64/kubectl
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 kubectl version --short
 minikube status
-
+```
 
 
